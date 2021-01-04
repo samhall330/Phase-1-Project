@@ -52,3 +52,9 @@
 - [Good git primer by Isabel K. Lee](https://dev.to/isabelxklee/a-beginner-s-guide-to-git-github-41jc)
 - [Introducing music to your CLI](https://simplemitch.com/2020/02/20/afplay-definitive-guide-to-manipulating-audio-in-your-cli-application-ruby/)
 
+### ERD ####
+
+User -< User_Emoji >- Emoji_rec -< book
+  |                             -< movie
+  ^                             -< quote
+User_Review
