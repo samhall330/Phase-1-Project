@@ -3,16 +3,16 @@ Movie.destroy_all
 Book.destroy_all
 Quote.destroy_all
 User.destroy_all
-Emoji_Rec.destroy_all
-User_Emoji.destroy_all
-User_Review.destroy_all
+EmojiRec.destroy_all
+UserEmoji.destroy_all
+UserReview.destroy_all
 Movie.reset_pk_sequence
 Book.reset_pk_sequence
 Quote.reset_pk_sequence
 User.reset_pk_sequence
-Emoji_Rec.reset_pk_sequence
-User_Emoji.reset_pk_sequence
-User_Review.reset_pk_sequence
+EmojiRec.reset_pk_sequence
+UserEmoji.reset_pk_sequence
+UserReview.reset_pk_sequence
 
 
 the_color_purple = Movie.create(
@@ -28,8 +28,8 @@ queen_of_katwe= Movie.create(
             director: "Mira Nair")
 
 the_joy_of_cooking = Book.create(
-    title: "The Joy of Cookiing",
-    author: "Irma Rombauer")
+            title: "The Joy of Cookiing",
+            author: "Irma Rombauer")
 
 turtles_all_the_way_down = Book.create(
             title: "Turtles All The Way Down",
@@ -61,56 +61,56 @@ user2 = User.create(
 user3 = User.create(
             username: "johnsmith")
 
-emoji_rec1 = Emoji_Rec.create(
+emoji_rec1 = EmojiRec.create(
             emoji_name: "winking face",
             book_id: the_joy_of_cooking.id,
             movie_id: 1,
             quote_id: 1)
 
-emoji_rec2 = Emoji_Rec.create(
+emoji_rec2 = EmojiRec.create(
             emoji_name: "grinning face",
             book_id: 2,
             movie_id: 2,
             quote_id: 2)
             
-emoji_rec3 = Emoji_Rec.create(
+emoji_rec3 = EmojiRec.create(
             emoji_name: "sleepy face",
             book_id: 3,
             movie_id: 3,
             quote_id: 3)
 
-user_emoji1 = User_Emoji.create(
+user_emoji1 = UserEmoji.create(
             user_id: 1,
             emoji_rec_id: 1)
 
-user_emoji2 = User_Emoji.create(
+user_emoji2 = UserEmoji.create(
             user_id: 2,
             emoji_rec_id: 2)
 
-user_emoji3 = User_Emoji.create(
+user_emoji3 = UserEmoji.create(
             user_id: 3,
             emoji_rec_id: 3)
 
-user_emoji4 = User_Emoji.create(
+user_emoji4 = UserEmoji.create(
                 user_id: 2,
                 emoji_rec_id: 3)
 
-user_review1 = User_Review.create(
+user_review1 = UserReview.create(
                 user_id: 1,
                 emoji_rec_id: 1,
                 user_review: "Great!")
 
-user_review2 = User_Review.create(
+user_review2 = UserReview.create(
                 user_id: 2,
                 emoji_rec_id: 2,
                 user_review: "Terrible!")
 
-user_review3 = User_Review.create(
+user_review3 = UserReview.create(
                 user_id: 3,
                 emoji_rec_id: 3,
                 user_review: "Absurd!")
 
-user_review4 = User_Review.create(
+user_review4 = UserReview.create(
                     user_id: 1,
                     emoji_rec_id: 3,
                     user_review: "My mom loves it!")

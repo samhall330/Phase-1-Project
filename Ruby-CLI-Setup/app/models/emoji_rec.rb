@@ -1,4 +1,4 @@
-class Emoji_Rec < ActiveRecord::Base
+class EmojiRec < ActiveRecord::Base
   has_many :books
   has_many :movies
   has_many :quotes

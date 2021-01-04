@@ -1,3 +1,3 @@
-class User_Review < ActiveRecord::Base
+class UserReview < ActiveRecord::Base
     belongs_to :user
   end
