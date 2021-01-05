@@ -8,10 +8,8 @@ class YourAppName
   end
   
   def run
-    # welcome
-    def welcome
-      
-    end
+    welcome
+  
     # login_or_signup
     # wanna_see_favs?
     # get_joke(what_subject)
@@ -21,5 +19,18 @@ class YourAppName
 
   private
 
-  
+  def welcome
+    puts "Welcome to our app!"
+    name = prompt.ask("Please enter your username")
+        if User.find_by(username: name)
+          puts "Welcome Back #{name}!"
+        else 
+          User.create(username: name)  
+          puts "Welcome, #{name}! Your profile has been created!"
+        end
+  end
+
+
+
+
 end
