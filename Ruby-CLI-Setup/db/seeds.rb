@@ -14,25 +14,25 @@ EmojiRec.reset_pk_sequence
 UserEmoji.reset_pk_sequence
 UserReview.reset_pk_sequence
 
-the_color_purple = Movie.create(title: "The Color Purple", director: "Steven Spielberg")
-frida = Movie.create(title: "Frida", director: "Julie Taymor")
-queen_of_katwe= Movie.create(title: "Queen of Katwe", director: "Mira Nair")
+emoji_rec1 = EmojiRec.create(emoji_name: "winking face")
+emoji_rec2 = EmojiRec.create(emoji_name: "grinning face")          
+emoji_rec3 = EmojiRec.create(emoji_name: "sleepy face")
 
-the_joy_of_cooking = Book.create(title: "The Joy of Cookiing", author: "Irma Rombauer")
-turtles_all_the_way_down = Book.create(title: "Turtles All The Way Down", author: "John Green")
-goodbye_stranger = Book.create(title: "Goodbye Stranger", author: "Rebecca Stead")
+the_color_purple = Movie.create(title: "The Color Purple", director: "Steven Spielberg", emoji_rec_id: 1)
+frida = Movie.create(title: "Frida", director: "Julie Taymor", emoji_rec_id: 2)
+queen_of_katwe= Movie.create(title: "Queen of Katwe", director: "Mira Nair", emoji_rec_id: 3)
 
-quote1 = Quote.create(text: "Act as if what you do makes a difference. It does.", author: "William James")
-quote2 = Quote.create(text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill")
-quote3 = Quote.create(text: "Never bend your head. Always hold it high. Look the world straight in the eye.", author: "Helen Keller") 
+the_joy_of_cooking = Book.create(title: "The Joy of Cookiing", author: "Irma Rombauer", emoji_rec_id: 1)
+turtles_all_the_way_down = Book.create(title: "Turtles All The Way Down", author: "John Green", emoji_rec_id: 2)
+goodbye_stranger = Book.create(title: "Goodbye Stranger", author: "Rebecca Stead", emoji_rec_id: 3)
+
+quote1 = Quote.create(text: "Act as if what you do makes a difference. It does.", author: "William James", emoji_rec_id: 1)
+quote2 = Quote.create(text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill", emoji_rec_id: 2)
+quote3 = Quote.create(text: "Never bend your head. Always hold it high. Look the world straight in the eye.", author: "Helen Keller", emoji_rec_id: 3) 
 
 user1 = User.create(username: "samhall")
 user2 = User.create(username: "melissafaulner")
 user3 = User.create(username: "johnsmith")
-
-emoji_rec1 = EmojiRec.create(emoji_name: "winking face", book_id: the_joy_of_cooking.id, movie_id: 1, quote_id: 1)
-emoji_rec2 = EmojiRec.create(emoji_name: "grinning face", book_id: 2, movie_id: 2, quote_id: 2)          
-emoji_rec3 = EmojiRec.create(emoji_name: "sleepy face", book_id: 3, movie_id: 3, quote_id: 3)
 
 user_emoji1 = UserEmoji.create(user_id: 1, emoji_rec_id: 1)
 user_emoji2 = UserEmoji.create(user_id: 2,emoji_rec_id: 2)
@@ -44,8 +44,8 @@ user_review2 = UserReview.create(user_id: 2, emoji_rec_id: 2, user_review: "Terr
 user_review3 = UserReview.create(user_id: 3, emoji_rec_id: 3, user_review: "Absurd!")
 user_review4 = UserReview.create(user_id: 1, emoji_rec_id: 3, user_review: "My mom loves it!")
 
-user1 << emoji_rec1
-binding.pry
+# user.emoji_recs.first.emoji_name
+# binding.pry
 # ########### different ways to write your seeds ############
 
 
