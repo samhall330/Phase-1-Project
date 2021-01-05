@@ -9,6 +9,7 @@ class YourAppName
   
   def run
     welcome
+    main_options
   
     # login_or_signup
     # wanna_see_favs?
@@ -30,7 +31,31 @@ class YourAppName
         end
   end
 
+  def main_options
+    system 'clear'
+    # name.reload
+    prompt.select("What do you want to do?") do |menu|
+      menu.choice "Get a recommendation", -> { get_recommendation_helper}
+      menu.choice "View past recommendations", -> { past_recommendation_helper}
+      menu.choice "View past reviews", -> { past_review_helper}
+      menu.choice "Exit", -> { exit_helper}
+    end
+  end
 
+  def get_recommendation_helper
 
+  end
+
+  def past_recommendation_helper
+  
+  end
+
+  def past_review_helper
+  
+  end
+
+  def exit_helper
+
+  end
 
 end
