@@ -17,6 +17,7 @@ UserReview.reset_pk_sequence
 the_color_purple = Movie.create(title: "The Color Purple", director: "Steven Spielberg")
 frida = Movie.create(title: "Frida", director: "Julie Taymor")
 queen_of_katwe= Movie.create(title: "Queen of Katwe", director: "Mira Nair")
+
 the_joy_of_cooking = Book.create(title: "The Joy of Cookiing", author: "Irma Rombauer")
 turtles_all_the_way_down = Book.create(title: "Turtles All The Way Down", author: "John Green")
 goodbye_stranger = Book.create(title: "Goodbye Stranger", author: "Rebecca Stead")
@@ -42,8 +43,9 @@ user_review1 = UserReview.create(user_id: 1, emoji_rec_id: 1, user_review: "Grea
 user_review2 = UserReview.create(user_id: 2, emoji_rec_id: 2, user_review: "Terrible!")
 user_review3 = UserReview.create(user_id: 3, emoji_rec_id: 3, user_review: "Absurd!")
 user_review4 = UserReview.create(user_id: 1, emoji_rec_id: 3, user_review: "My mom loves it!")
-           
 
+user1 << emoji_rec1
+binding.pry
 # ########### different ways to write your seeds ############
 
 
