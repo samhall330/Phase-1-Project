@@ -58,3 +58,25 @@ User -< User_Emoji >- Emoji_rec -< book
   |                             -< movie
   ^                             -< quote
 User_Review
+
+
+### TO DO 1/7 ####
+
+- Add in review functionality
+  - user writes reviews
+  - reviews are saved/associated to user instance
+
+- Add method to see all reviews for a user
+
+- Associate recommendations with a user
+
+- User ability to delete a recommendation
+  - add in at end of recommendation along with 'review' option
+
+- Add exit strategy to each progression. 
+
+- STRETCH GOALS
+  - Ability for user to see most commonly used emojis
+
+- ✨Prettify✨
+

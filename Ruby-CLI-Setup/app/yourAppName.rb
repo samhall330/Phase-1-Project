@@ -29,11 +29,13 @@ class YourAppName
     system 'clear'
     name = prompt.ask("Please enter your username")
         if User.find_by(username: name)
+          self.user = User.find_by(username: name)
           puts "Welcome Back #{name}!"
+          
         else 
           self.user = User.create(username: name)  
           puts "Welcome, #{name}! Your profile has been created!"
-          # binding.pry
+          
         end 
   end
 
@@ -57,6 +59,8 @@ class YourAppName
     answer = prompt.ask("How are you feeling today? Enter an emoji.")
     #take answer, write helper method that would convert answer to string.
     check_symbol(answer)
+    # binding.pry
+    # UserEmoji.create(user_id: self.id, emoji_rec_id: )
     rec_type
 
   end
@@ -70,11 +74,15 @@ class YourAppName
   end
 
   def exit_helper
-
+    sleep (1.5)
+    system 'clear'
+    puts "✨Thanks for visiting!✨"
+    sleep (1.5)
+    system 'exit!'
   end
 
   def check_symbol(arg)
-    emoji_hash.find do |emoji, emo_hash|
+    $emoji_variable = emoji_hash.find do |emoji, emo_hash|
     face_key = emo_hash.select {|key, value| value == arg}
     face_key[:face]
     end
@@ -90,21 +98,56 @@ class YourAppName
     end
   end
 
-  def book_rec(arg)
-    emoji_hash.find do |emoji, emo_hash|
-    face_key = emo_hash.select {|key, value| value == arg}
+  def book_rec
+    # binding.pry
+    book_array = $emoji_variable[1][:book]
+    book = book_array[0]
+    author = book_array[1]
+    puts "You should read #{book} by #{author}"
+    #helper method for review
+    exit_strategy
   end
 
   def movie_rec
-  
+    movie_array = $emoji_variable[1][:movie]
+    movie = movie_array[0]
+    director = movie_array[1]
+    puts "You should watch #{movie} by #{director}"
+    #helper method for review
+    exit_strategy
   end
 
   def quote_rec
-  
+    quote_array = $emoji_variable[1][:quote]
+    quote = quote_array[0]
+    author = quote_array[1]
+    puts "#{quote} —#{author}"
+    exit_strategy
+    #helper method for review
+    #return to menu or exit_helper?
   end
   
   def allthree_rec
+    # binding.pry
+    all_three = $emoji_variable[1]
+    book = "You should read #{all_three[:book][0]} by #{all_three[:book][1]}"
+    movie = "You should watch #{all_three[:movie][0]} by #{all_three[:movie][1]}"
+    quote = "#{all_three[:quote][0]} by #{all_three[:quote][1]}"
   
+    puts book
+    puts movie
+    puts quote
+
+    exit_strategy
+    
+  end
+
+  def exit_strategy
+    sleep (1.5)
+    prompt.select("Where would you like to go next?") do |menu|
+      menu.choice "Main Menu", -> { main_options}
+      menu.choice "Exit", -> { exit_helper}
+    end
   end
 
   # private
@@ -119,7 +162,7 @@ class YourAppName
     tired: {
         face: "😫",
         book: ["Carry On", "Rainbow Rowell"],
-        movie: ["Shaun of the Dead", "Director"],
+        movie: ["Shaun of the Dead", "Edgar Wright"],
         quote: ["Life's a bitch", "Author"]
         },
     pensive: {
