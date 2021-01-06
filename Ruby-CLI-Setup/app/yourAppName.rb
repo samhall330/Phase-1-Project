@@ -1,8 +1,9 @@
-#TEST2#
+
 class YourAppName
   # here will be your CLI!
   # it is not an AR class so you need to add attr
   attr_reader :prompt
+  attr_accessor :user
   
   def initialize
     @prompt = TTY::Prompt.new
@@ -10,11 +11,9 @@ class YourAppName
   
   def run
     welcome
+    enter_username
     main_options
   
-    # login_or_signup
-    # wanna_see_favs?
-    # get_joke(what_subject)
   end
 
   
@@ -23,18 +22,25 @@ class YourAppName
 
   def welcome
     puts "Welcome to our app!"
+  end
+
+  def enter_username
+    sleep(1.5)
+    system 'clear'
     name = prompt.ask("Please enter your username")
         if User.find_by(username: name)
           puts "Welcome Back #{name}!"
         else 
-          User.create(username: name)  
+          self.user = User.create(username: name)  
           puts "Welcome, #{name}! Your profile has been created!"
-        end
+          # binding.pry
+        end 
   end
 
   def main_options
+    sleep(1.5)
     system 'clear'
-    # name.reload
+    # user.reload
     prompt.select("What do you want to do?") do |menu|
       menu.choice "Get a recommendation", -> { get_recommendation_helper}
       menu.choice "View past recommendations", -> { past_recommendation_helper}
@@ -44,7 +50,10 @@ class YourAppName
   end
 
   def get_recommendation_helper
-
+    sleep(1.5)
+    system 'clear'
+    answer = prompt.ask("How are you feeling today? Enter an emoji.")
+    #take answer, write helper method that would convert answer to string.
   end
 
   def past_recommendation_helper
