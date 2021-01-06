@@ -1,4 +1,4 @@
-#TEST#
+#TEST2#
 class YourAppName
   # here will be your CLI!
   # it is not an AR class so you need to add attr
