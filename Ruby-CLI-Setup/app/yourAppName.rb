@@ -18,7 +18,7 @@ class YourAppName
 
   
 
-  private
+  # private
 
   def welcome
     puts "Welcome to our app!"
@@ -56,13 +56,8 @@ class YourAppName
     system 'clear'
     answer = prompt.ask("How are you feeling today? Enter an emoji.")
     #take answer, write helper method that would convert answer to string.
-    # answer = an emoji
-    # binding.pry
-    # emoji_hash.select{|emoji| emoji.symbol == answer}
-    emoji_hash.select do |emoji|
-      binding.pry
-      
-    end
+    check_symbol(answer)
+    rec_type
 
   end
 
@@ -78,53 +73,86 @@ class YourAppName
 
   end
 
+  def check_symbol(arg)
+    emoji_hash.find do |emoji, emo_hash|
+    face_key = emo_hash.select {|key, value| value == arg}
+    face_key[:face]
+    end
+    puts "We know that feeling."
+  end
 
-  private
+  def rec_type
+    prompt.select("What type of recommendation would you like?") do |menu|
+      menu.choice "Book", -> { book_rec}
+      menu.choice "Movie", -> { movie_rec}
+      menu.choice "Quote", -> { quote_rec}
+      menu.choice "All three!", -> { allthree_rec}
+    end
+  end
 
-  # emoji_hash = {
-  #   eyeroll: {
-  #       symbol: "🙄",
-  #       book: "Turtles All the Way Down",
-  #       movie: "Sabrina",
-  #       quote: "Look up!"
-  #       },
-  #   tired: {
-  #       symbol: "😫",
-  #       book: "Carry On",
-  #       movie: "Shaun of the Dead",
-  #       quote: "Life's a bitch"
-  #       },
-  #   pensive: {
-  #       symbol: "🤔",
-  #       book: "Goodbye Stranger",
-  #       movie: "Inception",
-  #       quote: "Something profound"
-  #       },
-  #   fire: {
-  #       symbol: "🔥",
-  #       book: "",
-  #       movie: "",
-  #       quote: ""
-  #       },
-  #   content: {
-  #       symbol: "😌",
-  #       book: "",
-  #       movie: "",
-  #       quote: ""
-  #       },
-  #   heart_eyes: {
-  #       symbol: "😍",
-  #       book: "",
-  #       movie: "",
-  #       quote: ""
-  #       },
-  #   sob: {
-  #       symbol: "😭",
-  #       book: "",
-  #       movie: "",
-  #       quote: ""
-  #       }
-  #   }
+  def book_rec(arg)
+    emoji_hash.find do |emoji, emo_hash|
+    face_key = emo_hash.select {|key, value| value == arg}
+  end
 
+  def movie_rec
+  
+  end
+
+  def quote_rec
+  
+  end
+  
+  def allthree_rec
+  
+  end
+
+  # private
+  def emoji_hash
+  emoji_hash = {
+    eyeroll: {
+        face: "🙄",
+        book: ["Turtles All the Way Down", "John Greene"],
+        movie: ["Sabrina", "Director"],
+        quote: ["Look up!", "Author"]
+        },
+    tired: {
+        face: "😫",
+        book: ["Carry On", "Rainbow Rowell"],
+        movie: ["Shaun of the Dead", "Director"],
+        quote: ["Life's a bitch", "Author"]
+        },
+    pensive: {
+        face: "🤔",
+        book: ["Goodbye Stranger", "Rebecca Stead"],
+        movie: ["Inception", "Christopher Nolan"],
+        quote: ["Something profound", "Author"]
+        },
+    fire: {
+        face: "🔥",
+        book: "",
+        movie: "",
+        quote: ""
+        },
+    content: {
+        face: "😌",
+        book: "",
+        movie: "",
+        quote: ""
+        },
+    heart_eyes: {
+        face: "😍",
+        book: "",
+        movie: "",
+        quote: ""
+        },
+    sob: {
+        face: "😭",
+        book: "",
+        movie: "",
+        quote: ""
+        }
+    }
+  end
   
 end
