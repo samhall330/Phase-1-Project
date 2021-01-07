@@ -4,6 +4,8 @@ class YourAppName
   # it is not an AR class so you need to add attr
   attr_reader :prompt
   attr_accessor :user
+
+  @@user_recs = []
   
   def initialize
     @prompt = TTY::Prompt.new
@@ -58,10 +60,6 @@ class YourAppName
     system 'clear'
     answer = prompt.ask("How are you feeling today? Enter an emoji.")
     check_symbol(answer)
-    # binding.pry
-    # emoji_str = emoji_to_str(answer)
-    # emoji_rec_instance = EmojiRec.all.find {|emoji_rec_var| emoji_rec_var[:emoji_name] == emoji_str}
-    # UserEmoji.create(user_id: self.user.id, emoji_rec_id: emoji_rec_instance.id)
     rec_type
   end
 
@@ -88,7 +86,6 @@ class YourAppName
   def check_symbol(arg)
     emoji_str = emoji_to_str(arg)
       emoji_rec_var = EmojiRec.all.select {|emoji_rec_var| emoji_rec_var[:emoji_name] == emoji_str}
-      binding.pry
       if emoji_rec_var
         puts "We know that feeling."
         UserEmoji.create(user_id: self.user.id, emoji_rec_id: emoji_rec_var[0][:id])
@@ -96,6 +93,7 @@ class YourAppName
         puts "We don't currently have that in our system"
         get_recommendation_helper
       end
+
   end
 
   def rec_type
@@ -103,53 +101,57 @@ class YourAppName
       menu.choice "Book", -> { book_rec}
       menu.choice "Movie", -> { movie_rec}
       menu.choice "Quote", -> { quote_rec}
-      menu.choice "All three!", -> { allthree_rec}
+      # store_all_recs
+      # menu.choice "All three!", -> { allthree_rec}
     end
   end
 
   def book_rec
     # binding.pry
-    book_array = $emoji_variable[1][:book]
-    book = book_array[0]
-    author = book_array[1]
-    puts "You should read #{book} by #{author}"
+    book_rec_var = Book.all.select{|book_rec_var| book_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
+    puts "You should read #{book_rec_var[0][:title]} by #{book_rec_var[0][:author]}"
     #helper method for review
+    shovel_method(book_rec_var)
     exit_strategy
   end
 
   def movie_rec
-    movie_array = $emoji_variable[1][:movie]
-    movie = movie_array[0]
-    director = movie_array[1]
-    puts "You should watch #{movie} by #{director}"
+    movie_rec_var = Movie.all.select{|movie_rec_var| movie_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
+    puts "You should watch #{movie_rec_var[0][:title]} by #{movie_rec_var[0][:director]}"
+    # binding.pry
+    # @@user_recs << movie_rec_var
     #helper method for review
     exit_strategy
   end
 
   def quote_rec
-    quote_array = $emoji_variable[1][:quote]
-    quote = quote_array[0]
-    author = quote_array[1]
-    puts "#{quote} —#{author}"
+    quote_rec_var = Quote.all.select{|quote_rec_var| quote_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
+    puts "#{quote_rec_var[0][:text]} -#{quote_rec_var[0][:author]}"
     exit_strategy
     #helper method for review
-   
   end
-  
-  def allthree_rec
-    # binding.pry
-    all_three = $emoji_variable[1]
-    book = "You should read #{all_three[:book][0]} by #{all_three[:book][1]}"
-    movie = "You should watch #{all_three[:movie][0]} by #{all_three[:movie][1]}"
-    quote = "#{all_three[:quote][0]} by #{all_three[:quote][1]}"
-  
-    puts book
-    puts movie
-    puts quote
 
-    exit_strategy
-    
+  def shovel_method(param)
+    binding.pry
+    @@user_recs << Hash.new({user_id: self.user[:id], rec_info: param[0]})
   end
+  
+
+  # def store_all_recs
+  #   binding.pry
+  # end
+  
+  # def allthree_rec
+  #   # binding.pry
+  #   all_three = $emoji_variable[1]
+  #   book = "You should read #{all_three[:book][0]} by #{all_three[:book][1]}"
+  #   movie = "You should watch #{all_three[:movie][0]} by #{all_three[:movie][1]}"
+  #   quote = "#{all_three[:quote][0]} by #{all_three[:quote][1]}"
+  #   puts book
+  #   puts movie
+  #   puts quote
+  #   exit_strategy   
+  # end
 
   def exit_strategy
     sleep (1.5)
