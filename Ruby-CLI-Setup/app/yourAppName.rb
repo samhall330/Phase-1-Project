@@ -124,7 +124,7 @@ class YourAppName
     puts "#{quote} —#{author}"
     exit_strategy
     #helper method for review
-    #return to menu or exit_helper?
+   
   end
   
   def allthree_rec
@@ -155,45 +155,45 @@ class YourAppName
   emoji_hash = {
     eyeroll: {
         face: "🙄",
-        book: ["Turtles All the Way Down", "John Greene"],
-        movie: ["Sabrina", "Director"],
-        quote: ["Look up!", "Author"]
+        book: ["Catch-22", "Joseph Heller"],
+        movie: ["Dr. Strangelove", "Stanley Kubrick"],
+        quote: ["Life is really simple, but we insist on making it complicated.", "Confucius"]
         },
     tired: {
         face: "😫",
-        book: ["Carry On", "Rainbow Rowell"],
-        movie: ["Shaun of the Dead", "Edgar Wright"],
-        quote: ["Life's a bitch", "Author"]
+        book: ["The Handmaid's Tale", "Margaret Atwood"],
+        movie: ["Parasite", "Bong Joon-ho"],
+        quote: ["Life is never fair, and perhaps it is a good thing for most of us that it is not.", "Oscar Wilde"]
         },
     pensive: {
         face: "🤔",
-        book: ["Goodbye Stranger", "Rebecca Stead"],
+        book: ["Ulysses", "James Joyce"],
         movie: ["Inception", "Christopher Nolan"],
-        quote: ["Something profound", "Author"]
+        quote: ["That man is wisest who realizes that his wisdom is worthless", "Plato"]
         },
     fire: {
         face: "🔥",
-        book: "",
-        movie: "",
-        quote: ""
+        book: ["Fahrenheit 451", "Ray Bradbury"],
+        movie: ["Carrie", "Brian De Palma"],
+        quote: ["Keep a little fire burning; however small, however hidden.", "Cormac McCarthy"]
         },
     content: {
         face: "😌",
-        book: "",
-        movie: "",
-        quote: ""
+        book: ["The Hobbit", "J.R.R Tolkien"],
+        movie: ["My Neighbor Totoro", "Hayao Miyazaki"],
+        quote: ["Life itself is the most wonderful fairy tale.", "Hans Christian Andersen"]
         },
     heart_eyes: {
         face: "😍",
-        book: "",
-        movie: "",
-        quote: ""
+        book:  ["A Midsummer Night’s Dream", "William Shakespeare"],
+        movie: ["Eternal Sunshine of the Spotless Mind", "Michel Gondry"],
+        quote: ["Love recognizes no barriers. It jumps hurdles, leaps fences, penetrates walls to arrive at its destination full of hope.", "Maya Angelou"]
         },
     sob: {
         face: "😭",
-        book: "",
-        movie: "",
-        quote: ""
+        book: ["Flowers for Algernon", "Daniel Keyes"],
+        movie: ["Up", "Pete Docter"],
+        quote: ["Life is a long lesson in humility.", "James M. Barrie"]
         }
     }
   end
