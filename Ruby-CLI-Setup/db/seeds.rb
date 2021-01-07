@@ -18,13 +18,13 @@ UserReview.reset_pk_sequence
 # 🙄  
 emoji_rec1 = EmojiRec.create(emoji_name: ":rolling_eyes:")
 # 😫  
-emoji_rec2 = EmojiRec.create(emoji_name: ":weary:")          
+emoji_rec2 = EmojiRec.create(emoji_name: ":tired_face:")          
 # 😎  
-emoji_rec3 = EmojiRec.create(emoji_name: "sunglasses")
+emoji_rec3 = EmojiRec.create(emoji_name: ":sunglasses:")
 # 🔥  
 emoji_rec4 = EmojiRec.create(emoji_name: ":fire:")
 # 😌  
-emoji_rec5 = EmojiRec.create(emoji_name: ":relieved:")
+emoji_rec5 = EmojiRec.create(emoji_name: ":satisfied:")
 # 😍  
 emoji_rec6 = EmojiRec.create(emoji_name: ":heart_eyes:")
 # 😭  

@@ -49,6 +49,7 @@ class YourAppName
       menu.choice "Get a recommendation", -> { get_recommendation_helper}
       menu.choice "View past recommendations", -> { past_recommendation_helper}
       menu.choice "View past reviews", -> { past_review_helper}
+      menu.choice "Logout & Start Over", -> { run}
       menu.choice "Exit", -> { exit_helper}
     end
   end
@@ -64,7 +65,8 @@ class YourAppName
   end
 
   def past_recommendation_helper
-  
+    # binding.pry
+   p @@user_recs
   end
 
   def past_review_helper
@@ -118,8 +120,8 @@ class YourAppName
   def movie_rec
     movie_rec_var = Movie.all.select{|movie_rec_var| movie_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
     puts "You should watch #{movie_rec_var[0][:title]} by #{movie_rec_var[0][:director]}"
-    # binding.pry
-    # @@user_recs << movie_rec_var
+ 
+    shovel_method(movie_rec_var)
     #helper method for review
     exit_strategy
   end
@@ -127,13 +129,14 @@ class YourAppName
   def quote_rec
     quote_rec_var = Quote.all.select{|quote_rec_var| quote_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
     puts "#{quote_rec_var[0][:text]} -#{quote_rec_var[0][:author]}"
+    shovel_method(quote_rec_var)
     exit_strategy
     #helper method for review
   end
 
   def shovel_method(param)
-    binding.pry
-    @@user_recs << Hash.new({user_id: self.user[:id], rec_info: param[0]})
+    recs = {user_id: self.user[:id], rec_info: param[0]}
+    @@user_recs << recs
   end
   
 
