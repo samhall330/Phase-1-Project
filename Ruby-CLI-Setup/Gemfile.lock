@@ -34,6 +34,7 @@ GEM
       rack
     rake (13.0.3)
     require_all (3.0.0)
+    rumoji (0.5.0)
     sinatra (2.0.7)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -71,6 +72,7 @@ DEPENDENCIES
   pry
   rake
   require_all
+  rumoji
   sinatra-activerecord
   sqlite3
   tty-prompt

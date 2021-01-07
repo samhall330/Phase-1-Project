@@ -12,3 +12,4 @@ gem "tty-prompt"
 
 gem "colorize"
 gem "activerecord-reset-pk-sequence"
+gem "rumoji"

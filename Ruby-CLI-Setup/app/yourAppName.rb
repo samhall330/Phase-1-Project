@@ -57,12 +57,12 @@ class YourAppName
     sleep(1.5)
     system 'clear'
     answer = prompt.ask("How are you feeling today? Enter an emoji.")
-    #take answer, write helper method that would convert answer to string.
     check_symbol(answer)
     # binding.pry
-    # UserEmoji.create(user_id: self.id, emoji_rec_id: )
+    # emoji_str = emoji_to_str(answer)
+    # emoji_rec_instance = EmojiRec.all.find {|emoji_rec_var| emoji_rec_var[:emoji_name] == emoji_str}
+    # UserEmoji.create(user_id: self.user.id, emoji_rec_id: emoji_rec_instance.id)
     rec_type
-
   end
 
   def past_recommendation_helper
@@ -81,12 +81,21 @@ class YourAppName
     system 'exit!'
   end
 
+  def emoji_to_str(arg)
+    Rumoji.encode(arg) {|emoji| emoji.code}
+  end
+
   def check_symbol(arg)
-    $emoji_variable = emoji_hash.find do |emoji, emo_hash|
-    face_key = emo_hash.select {|key, value| value == arg}
-    face_key[:face]
-    end
-    puts "We know that feeling."
+    emoji_str = emoji_to_str(arg)
+      emoji_rec_var = EmojiRec.all.select {|emoji_rec_var| emoji_rec_var[:emoji_name] == emoji_str}
+      binding.pry
+      if emoji_rec_var
+        puts "We know that feeling."
+        UserEmoji.create(user_id: self.user.id, emoji_rec_id: emoji_rec_var[0][:id])
+      else 
+        puts "We don't currently have that in our system"
+        get_recommendation_helper
+      end
   end
 
   def rec_type
@@ -150,52 +159,6 @@ class YourAppName
     end
   end
 
-  # private
-  def emoji_hash
-  emoji_hash = {
-    eyeroll: {
-        face: "🙄",
-        book: ["Catch-22", "Joseph Heller"],
-        movie: ["Dr. Strangelove", "Stanley Kubrick"],
-        quote: ["Life is really simple, but we insist on making it complicated.", "Confucius"]
-        },
-    tired: {
-        face: "😫",
-        book: ["The Handmaid's Tale", "Margaret Atwood"],
-        movie: ["Parasite", "Bong Joon-ho"],
-        quote: ["Life is never fair, and perhaps it is a good thing for most of us that it is not.", "Oscar Wilde"]
-        },
-    pensive: {
-        face: "🤔",
-        book: ["Ulysses", "James Joyce"],
-        movie: ["Inception", "Christopher Nolan"],
-        quote: ["That man is wisest who realizes that his wisdom is worthless", "Plato"]
-        },
-    fire: {
-        face: "🔥",
-        book: ["Fahrenheit 451", "Ray Bradbury"],
-        movie: ["Carrie", "Brian De Palma"],
-        quote: ["Keep a little fire burning; however small, however hidden.", "Cormac McCarthy"]
-        },
-    content: {
-        face: "😌",
-        book: ["The Hobbit", "J.R.R Tolkien"],
-        movie: ["My Neighbor Totoro", "Hayao Miyazaki"],
-        quote: ["Life itself is the most wonderful fairy tale.", "Hans Christian Andersen"]
-        },
-    heart_eyes: {
-        face: "😍",
-        book:  ["A Midsummer Night’s Dream", "William Shakespeare"],
-        movie: ["Eternal Sunshine of the Spotless Mind", "Michel Gondry"],
-        quote: ["Love recognizes no barriers. It jumps hurdles, leaps fences, penetrates walls to arrive at its destination full of hope.", "Maya Angelou"]
-        },
-    sob: {
-        face: "😭",
-        book: ["Flowers for Algernon", "Daniel Keyes"],
-        movie: ["Up", "Pete Docter"],
-        quote: ["Life is a long lesson in humility.", "James M. Barrie"]
-        }
-    }
-  end
+ 
   
 end

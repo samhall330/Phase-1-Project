@@ -14,9 +14,21 @@ EmojiRec.reset_pk_sequence
 UserEmoji.reset_pk_sequence
 UserReview.reset_pk_sequence
 
-emoji_rec1 = EmojiRec.create(emoji_name: "winking face")
-emoji_rec2 = EmojiRec.create(emoji_name: "grinning face")          
-emoji_rec3 = EmojiRec.create(emoji_name: "sleepy face")
+
+# 🙄  
+emoji_rec1 = EmojiRec.create(emoji_name: ":rolling_eyes:")
+# 😫  
+emoji_rec2 = EmojiRec.create(emoji_name: ":weary:")          
+# 😎  
+emoji_rec3 = EmojiRec.create(emoji_name: "sunglasses")
+# 🔥  
+emoji_rec4 = EmojiRec.create(emoji_name: ":fire:")
+# 😌  
+emoji_rec5 = EmojiRec.create(emoji_name: ":relieved:")
+# 😍  
+emoji_rec6 = EmojiRec.create(emoji_name: ":heart_eyes:")
+# 😭  
+emoji_rec7 = EmojiRec.create(emoji_name: ":sob:")
 
 the_color_purple = Movie.create(title: "The Color Purple", director: "Steven Spielberg", emoji_rec_id: 1)
 frida = Movie.create(title: "Frida", director: "Julie Taymor", emoji_rec_id: 2)
@@ -44,81 +56,53 @@ user_review2 = UserReview.create(user_id: 2, emoji_rec_id: 2, user_review: "Terr
 user_review3 = UserReview.create(user_id: 3, emoji_rec_id: 3, user_review: "Absurd!")
 user_review4 = UserReview.create(user_id: 1, emoji_rec_id: 3, user_review: "My mom loves it!")
 
-# user.emoji_recs.first.emoji_name
-# binding.pry
-# ########### different ways to write your seeds ############
 
 
-# # 1: save everything to variables (makes it easy to connect models, best for when you want to be intentional about your seeds)
-# # basil = Plant.create(name: "basil the herb", bought: 20200610, color: "green")
-# # sylwia = Person.create(name: "Sylwia", free_time: "none", age: 30)
-# # pp1 = PlantParenthood.create(plant_id: basil.id, person_id: sylwia.id, affection: 1_000_000, favorite?: true)
-
-# # 2. Mass create -- in order to connect them later IN SEEDS (not through the app) you'll need to find their id
-# ## a. by passing an array of hashes:
-
-
-
-
-
-
-
-# Plant.create([
-#     {name: "Corn Tree", bought: 20170203, color: "green"},
-#     {name: "Prayer plant", bought: 20190815, color: "purple"},
-#     {name: "Cactus", bought: 20200110, color: "ugly green"}
-# ])
-# ## b. by interating over an array of hashes:
-# plants = [{name: "Elephant bush", bought: 20180908, color: "green"},
-#     {name: "Photos", bought: 20170910, color: "green"},
-#     {name: "Dragon tree", bought: 20170910, color: "green"},
-#     {name: "Snake plant", bought: 20170910, color: "dark green"},
-#     {name: "polka dot plant", bought: 20170915, color: "pink and green"},
-#     {name: "Cactus", bought: 20200517, color: "green"}]
-
-# plants.each{|hash| Plant.create(hash)}
-
-
-
-
-
-
-# # 3. Use Faker and mass create
-# ## step 1: write a method that creates a person
-# def create_person
-#     free = ["mornings", "evenings", "always", "afternoons", "weekends", "none"].sample
-
-#     person = Person.create(
-#         name: Faker::Movies::HitchhikersGuideToTheGalaxy.character,
-#         free_time: free,
-#         age: rand(11...70)
-#     )
-# end
-
-# ## step 2: write a method that creates a joiner
-# def create_joiners(person)
-#     plants_number = rand(1..4)
-#     plants_number.times do 
-#         PlantParenthood.create(
-#             plant_id: Plant.all.sample.id, 
-#             person_id: person.id, 
-#             affection: rand(101), 
-#             favorite?: [true, false].sample
-#         )
+# def emoji_hash
+#     emoji_hash = {
+#       eyeroll: {
+#           face: "🙄",
+#           book: ["Catch-22", "Joseph Heller"],
+#           movie: ["Dr. Strangelove", "Stanley Kubrick"],
+#           quote: ["Life is really simple, but we insist on making it complicated.", "Confucius"]
+#           },
+#       tired: {
+#           face: "😫",
+#           book: ["The Handmaid's Tale", "Margaret Atwood"],
+#           movie: ["Parasite", "Bong Joon-ho"],
+#           quote: ["Life is never fair, and perhaps it is a good thing for most of us that it is not.", "Oscar Wilde"]
+#           },
+#       pensive: {
+#           face: "🤔",
+#           book: ["Ulysses", "James Joyce"],
+#           movie: ["Inception", "Christopher Nolan"],
+#           quote: ["That man is wisest who realizes that his wisdom is worthless", "Plato"]
+#           },
+#       fire: {
+#           face: "🔥",
+#           book: ["Fahrenheit 451", "Ray Bradbury"],
+#           movie: ["Carrie", "Brian De Palma"],
+#           quote: ["Keep a little fire burning; however small, however hidden.", "Cormac McCarthy"]
+#           },
+#       content: {
+#           face: "😌",
+#           book: ["The Hobbit", "J.R.R Tolkien"],
+#           movie: ["My Neighbor Totoro", "Hayao Miyazaki"],
+#           quote: ["Life itself is the most wonderful fairy tale.", "Hans Christian Andersen"]
+#           },
+#       heart_eyes: {
+#           face: "😍",
+#           book:  ["A Midsummer Night’s Dream", "William Shakespeare"],
+#           movie: ["Eternal Sunshine of the Spotless Mind", "Michel Gondry"],
+#           quote: ["Love recognizes no barriers. It jumps hurdles, leaps fences, penetrates walls to arrive at its destination full of hope.", "Maya Angelou"]
+#           },
+#       sob: {
+#           face: "😭",
+#           book: ["Flowers for Algernon", "Daniel Keyes"],
+#           movie: ["Up", "Pete Docter"],
+#           quote: ["Life is a long lesson in humility.", "James M. Barrie"]
+#           }
+#       }
 #     end
-# end
-
-# ## step 3: invoke creating joiners by passing in an instance of a person
-# 10.times do     
-#     create_joiners(create_person)
-#     ##### ALTERNATIVE:
-#     # person = create_person
-#     # create_joiners(person)
-# end
-
-# indoor = Category.create(name: "indoors")
-
-# Plant.update(category_id: indoor.id)
-
 
 puts "🔥 🔥 🔥 🔥 "
