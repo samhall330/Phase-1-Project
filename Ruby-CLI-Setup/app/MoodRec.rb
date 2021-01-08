@@ -1,4 +1,4 @@
-class YourAppName
+class MoodRec
   
   attr_reader :prompt
   attr_accessor :user
@@ -8,22 +8,36 @@ class YourAppName
   end
   
   def run
+    system 'clear'
     welcome
+    sleep(2)
     enter_username
     main_options
   end
 
   def welcome
-    puts "Welcome to our app!"
+    puts art
+  end
+
+  def art
+    puts        
+    puts"    
+███╗   ███╗ ██████╗  ██████╗ ██████╗  ██████╗ ███████╗ ██████╗
+████╗ ████║██╔═══██╗██╔═══██╗██╔══██╗ ██╔══██╗██╔════╝██╔════╝
+██╔████╔██║██║   ██║██║   ██║██║  ██║ ██████╔╝█████╗  ██║     
+██║╚██╔╝██║██║   ██║██║   ██║██║  ██║ ██╔══██╗██╔══╝  ██║     
+██║ ╚═╝ ██║╚██████╔╝╚██████╔╝██████╔╝ ██║  ██║███████╗╚██████╗
+╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚═════╝  ╚═╝  ╚═╝╚══════╝ ╚═════╝\n".colorize(:cyan)
+puts ""
+puts "✨✨✨The app that's here for you, no matter your mood✨✨✨"
+
   end
 
   def enter_username
-    sleep(1.5)
-    system 'clear'
     name = prompt.ask("Please enter your username")
         if User.find_by(username: name)
           self.user = User.find_by(username: name)
-          puts "Welcome Back #{name}!"
+          puts "Welcome Back, #{name}!"
           # binding.pry
         else 
           self.user = User.create(username: name)  
@@ -35,7 +49,7 @@ class YourAppName
     sleep(1.5)
     system 'clear'
     # user.reload
-    prompt.select("What do you want to do?") do |menu|
+    prompt.select("What would you like to do?") do |menu|
       menu.choice "Get a recommendation", -> { get_recommendation_helper}
       menu.choice "View past recommendations", -> { past_recommendation_helper}
       menu.choice "View past reviews", -> { past_review_helper}
@@ -47,7 +61,9 @@ class YourAppName
   def get_recommendation_helper
     sleep(1.5)
     system 'clear'
-    answer = prompt.ask("How are you feeling today? Enter an emoji.")
+    puts "How are you feeling today?"
+    sleep(1)
+    answer = prompt.ask("Enter an emoji")
     check_symbol(answer)
     rec_type
   end
@@ -119,26 +135,28 @@ class YourAppName
     emoji_str = emoji_to_str(arg)
       emoji_rec_var = EmojiRec.all.select {|emoji_rec_var| emoji_rec_var[:emoji_name] == emoji_str}
       if emoji_rec_var
-        puts "We know that feeling."
+        sleep(1.5)
+        puts "⭐️We know that feeling.⭐️"
         UserEmoji.create(user_id: self.user.id, emoji_rec_id: emoji_rec_var[0][:id])
       else 
         puts "We don't currently have that in our system"
+        sleep(1)
         get_recommendation_helper
       end
-
+    
   end
 
   def rec_type
     prompt.select("What type of recommendation would you like?") do |menu|
-      menu.choice "Book", -> { book_rec }
-      menu.choice "Movie", -> { movie_rec }
-      menu.choice "Quote", -> { quote_rec }
+      menu.choice "Book 📚", -> { book_rec }
+      menu.choice "Movie 🎬", -> { movie_rec }
+      menu.choice "Quote 🎙", -> { quote_rec }
     end
   end
 
   def book_rec
     book_rec_var = Book.all.select{|book_rec_var| book_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
-    rec = "You should read #{book_rec_var[0][:title]} by #{book_rec_var[0][:author]}"
+    rec = "You should check out #{book_rec_var[0][:title]} by #{book_rec_var[0][:author]}"
     puts rec
     UserEmoji.last.update(recommendation: rec)
     puts "This recommendation has been saved for you! Yay!"

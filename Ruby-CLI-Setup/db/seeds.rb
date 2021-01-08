@@ -30,18 +30,31 @@ emoji_rec6 = EmojiRec.create(emoji_name: ":heart_eyes:")
 # 😭  
 emoji_rec7 = EmojiRec.create(emoji_name: ":sob:")
 
-the_color_purple = Movie.create(title: "The Color Purple", director: "Steven Spielberg", emoji_rec_id: 1)
-frida = Movie.create(title: "Frida", director: "Julie Taymor", emoji_rec_id: 2)
-queen_of_katwe= Movie.create(title: "Queen of Katwe", director: "Mira Nair", emoji_rec_id: 3)
+dr_strangelove = Movie.create(title: "Dr. Strangelove", director: "Stanley Kubrick", emoji_rec_id: 1)
+parasite = Movie.create(title: "Parasite", director: "Bong Joon-ho", emoji_rec_id: 2)
+sunshine = Movie.create(title: "Sunshine", director: "Danny Boyle", emoji_rec_id: 3)
+carrie = Movie.create(title: "Carrie", director: "Brian De Palma", emoji_rec_id: 4)
+totoro = Movie.create(title: "My Neighbor Totoro", director: "Hayao Miyazaki", emoji_rec_id: 5)
+eternal_sunshine = Movie.create(title: "Eternal Sunshine of the Spotless Mind", director: "Michel Gondry", emoji_rec_id: 6)
+up = Movie.create(title: "Up", director: "Pete Docter", emoji_rec_id: 7)
 
-the_joy_of_cooking = Book.create(title: "The Joy of Cookiing", author: "Irma Rombauer", emoji_rec_id: 1)
-turtles_all_the_way_down = Book.create(title: "Turtles All The Way Down", author: "John Green", emoji_rec_id: 2)
-goodbye_stranger = Book.create(title: "Goodbye Stranger", author: "Rebecca Stead", emoji_rec_id: 3)
+catch_twenty_two = Book.create(title: "Catch-22", author: "Joseph Heller", emoji_rec_id: 1)
+handmaids_tale = Book.create(title: "The Handmaid's Tale", author: "Margaret Atwood", emoji_rec_id: 2)
+on_the_road = Book.create(title: "On the Road", author: "Jack Kerouac", emoji_rec_id: 3)
+fahrenheit_fourfiftyone = Book.create(title: "Fahrenheit 451", author: "Ray Bradbury", emoji_rec_id: 4)
+the_hobbit = Book.create(title: "The Hobbit", author: "JRR Tolkien", emoji_rec_id: 5)
+midsummer = Book.create(title: "A Midsummer Night's Dream", author: "William Shakespeare", emoji_rec_id: 6)
+flowers_for_algernon = Book.create(title: "Flowers for Algernon", author: "Daniel Keyes", emoji_rec_id: 7)
 
-quote1 = Quote.create(text: "Act as if what you do makes a difference. It does.", author: "William James", emoji_rec_id: 1)
-quote2 = Quote.create(text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill", emoji_rec_id: 2)
+quote1 = Quote.create(text: "Life is really simple, but we insist on making it complicated.", author: "Confucius", emoji_rec_id: 1)
+quote2 = Quote.create(text: "Life is never fair, and perhaps it is a good thing for most of us that it is not.", author: "Oscar Wilde", emoji_rec_id: 2)
 quote3 = Quote.create(text: "Never bend your head. Always hold it high. Look the world straight in the eye.", author: "Helen Keller", emoji_rec_id: 3) 
+quote4 = Quote.create(text: "Keep a little fire burning; however small, however hidden.", author: "Cormac McCarthy", emoji_rec_id: 4)
+quote5 = Quote.create(text: "Life itself is the most wonderful fairy tale.", author: "Hans Christian Andersen", emoji_rec_id: 5)
+quote6 = Quote.create(text: "Love recognizes no barriers. It jumps hurdles, leaps fences, penetrates walls to arrive at its destination full of hope.", author: "Maya Angelou", emoji_rec_id: 6)
+quote7 = Quote.create(text: "Life is a long lesson in humility.", author: "James M. Barrie", emoji_rec_id: 7)
 
+## Seed data for testing #
 user1 = User.create(username: "samhall")
 user2 = User.create(username: "melissafaulner")
 user3 = User.create(username: "johnsmith")
@@ -59,51 +72,5 @@ user_review4 = UserReview.create(user_id: 1, emoji_rec_id: 3, user_review: "My m
 
 
 
-# def emoji_hash
-#     emoji_hash = {
-#       eyeroll: {
-#           face: "🙄",
-#           book: ["Catch-22", "Joseph Heller"],
-#           movie: ["Dr. Strangelove", "Stanley Kubrick"],
-#           quote: ["Life is really simple, but we insist on making it complicated.", "Confucius"]
-#           },
-#       tired: {
-#           face: "😫",
-#           book: ["The Handmaid's Tale", "Margaret Atwood"],
-#           movie: ["Parasite", "Bong Joon-ho"],
-#           quote: ["Life is never fair, and perhaps it is a good thing for most of us that it is not.", "Oscar Wilde"]
-#           },
-#       pensive: {
-#           face: "🤔",
-#           book: ["Ulysses", "James Joyce"],
-#           movie: ["Inception", "Christopher Nolan"],
-#           quote: ["That man is wisest who realizes that his wisdom is worthless", "Plato"]
-#           },
-#       fire: {
-#           face: "🔥",
-#           book: ["Fahrenheit 451", "Ray Bradbury"],
-#           movie: ["Carrie", "Brian De Palma"],
-#           quote: ["Keep a little fire burning; however small, however hidden.", "Cormac McCarthy"]
-#           },
-#       content: {
-#           face: "😌",
-#           book: ["The Hobbit", "J.R.R Tolkien"],
-#           movie: ["My Neighbor Totoro", "Hayao Miyazaki"],
-#           quote: ["Life itself is the most wonderful fairy tale.", "Hans Christian Andersen"]
-#           },
-#       heart_eyes: {
-#           face: "😍",
-#           book:  ["A Midsummer Night’s Dream", "William Shakespeare"],
-#           movie: ["Eternal Sunshine of the Spotless Mind", "Michel Gondry"],
-#           quote: ["Love recognizes no barriers. It jumps hurdles, leaps fences, penetrates walls to arrive at its destination full of hope.", "Maya Angelou"]
-#           },
-#       sob: {
-#           face: "😭",
-#           book: ["Flowers for Algernon", "Daniel Keyes"],
-#           movie: ["Up", "Pete Docter"],
-#           quote: ["Life is a long lesson in humility.", "James M. Barrie"]
-#           }
-#       }
-#     end
 
-puts "🔥 🔥 🔥 🔥 "
+puts "🔥 🔥  SEEDED 🔥 🔥 "
