@@ -1,82 +1,43 @@
-## Ruby CLI stub repo
 
-### NOTE
-- this setup contains a rakefile with helpful process reminders
+✨Welcome to 'MoodRec'✨
 
-### Setup
-0. Clone the repo (do not fork), `cd` to the folder and then run `rm -rf .git` to remove git tracking. This will allow you to use this repo as your own repository, unconnected to mine. Go to github, create a new repository and upload the starter there. 
-1. Create Gemfile + run `bundle`
-2. Create migrations: run `rake db:create_migration` and add the syntax you need (e.g. `NAME=create_users`)
-3. Migrate: run `rake db:migrate`
-* **REMEMBER** never ever ever change anything in schema.
-4. Go to `.bin/run.rb` and change the name of the app on line 3 AND/OR go to `Rakefile` and change the name of the app on line 15
-5. Go to `./app/models` and change the names of the files (e.g. `User.rb` <- singular) and the class names inside
-6. Set up association macros in classes (`belongs_to` / `has_many` / `has_many, through:`)
-7. Create seed file in `db/seed.rb` + then run `rake db:seed`
-* remember: seeding does not give you any output so no news on your console == good news
-8. Check if you've seeded correctly: run `rake c` and check what's the last instance of any of your class 
-9. Go to `./app/yourAppName.rb` and change that file's name and whatever is inside (the class name should correspond to what you wrote in `.bin/run.rb` on line 3)
-10. Remember to change the readme. If you need an inspiration on how to write a good readme, check [this blog post](https://dev.to/sylwiavargas/recipe-for-a-good-readme-3m6j).
+MoodRec is a CLI interface that allows users to input how they're feeling with an emoji, and then recieve recommendations based off they're input. Users can determine whether they'd like a 'book,' 'movie,' or 'inspirational quote' recommendation. 
 
-### Coding
-1. Create a dummy version of your logic -> hardcode it and don't yet make your code save anything to the database, just make sure that the logic works
-2. Test often by running the file, by running `rake console` or by `binding.pry`
-3. What I fould useful is drowing out every step I want to guide users through before coding - my whiteboard looked like this:
-![](Sunday.jpg)
-4. Then I coded the dummy version (without saving to the database, just to see if all "if"s are working and all that jazz)
-5. Then I added the database manipulations.
-6. Then I beautified the code and the app to make it visually pleasing
+After recieving their recommendation, they can save it and review it. Users then have the ability to see all of their past emoji, recommendations, and reviews.
 
-## APIs
+# Installing #
 
-- [Dad Jokes API Docs](https://icanhazdadjoke.com/api)
-- [Sample API Request](https://icanhazdadjoke.com/api#fetch-a-random-dad-joke)
+- Clone this project to your local drive
+- Navigate to the project folder
+- run 'bundle install' to install all gems
+- Create the necessary tables by running migrations with 'rake db:migrate'
+- Seed the database by running 'rake db:seed'
+- run 'ruby ./bin/run.rb'
 
-- [More APIs](https://rapidapi.com/collection/cool-apis)
-- [And even more APIs](https://medium.com/@vicbergquist/18-fun-apis-for-your-next-project-8008841c7be9)
+# Navigation #
 
-## Fun Gems For Your Projects
-- `faker` - randomly generated seed data fun
-- `colorize` - colored text output in your terminal
-- `lolcat` - enabling rainbow text coloring
-- `rest-client` - make HTTP requests and get data from APIs
-- `tty-prompt` - nice interface for prompting for user input
-- `formatador` - styling output information into a neat table
-- `artii` - creating text banners
+- Welcome page
+- Main Option page where you can navigate to:
+  - Get a recommendation
+  - View past recommendations
+  - View past reviews
+  - Logout & Start Over
+  - Exit
+- From Get a Recommendation, you can choose:
+  -Book
+  -Movie
+  -Quote
+- From each type of recommendation, you can:
+  - Delete the recommendation
+  - Choose to write a review, which you can then delete if you choose.
 
-## Tutorials
-- [Adding animations to your CLI by Sylwia Vargas](https://medium.com/better-programming/add-an-animation-or-a-giph-to-your-ruby-cli-29952e8c46ea)
-- [Adding ASCII Art to your CLI by Sylwia Vargas](https://medium.com/@sylwiavargas/adding-pictures-to-your-ruby-cli-4252b89823a)
-- [Lecture: Setting up TTY Prompt in your CLI by Sylwia Vargas](https://github.com/sylwiavargas/tty-prompt-activity)
-- [Project tracking tool from GitHub (where you can connect projects, issues, etc) by Isabel K. Lee:](https://medium.com/swlh/how-git-and-github-can-make-your-life-easier-2ff5b9e1f6f1)
-- [Good git primer by Isabel K. Lee](https://dev.to/isabelxklee/a-beginner-s-guide-to-git-github-41jc)
-- [Introducing music to your CLI](https://simplemitch.com/2020/02/20/afplay-definitive-guide-to-manipulating-audio-in-your-cli-application-ruby/)
+# Built With #
 
-### ERD ####
+"activerecord", "~> 5.2"
+"sinatra-activerecord"
+"sqlite3"
 
-User -< User_Emoji >- Emoji_rec -< book
-  |                             -< movie
-  ^                             -< quote
-User_Review
-
-
-### TO DO 1/7 ####
-
-- Add in review functionality
-  - user writes reviews
-  - reviews are saved/associated to user instance
-
-- Add method to see all reviews for a user
-
-- Associate recommendations with a user
-
-- User ability to delete a recommendation
-  - add in at end of recommendation along with 'review' option
-
-- Add exit strategy to each progression. 
-
-- STRETCH GOALS
-  - Ability for user to see most commonly used emojis
-
-- ✨Prettify✨
+"tty-prompt" - for a beautiful CLI interface
+"colorize" - enables text coloring
+"rumoji" - for easy encoding/decoding of emoji and text 
 

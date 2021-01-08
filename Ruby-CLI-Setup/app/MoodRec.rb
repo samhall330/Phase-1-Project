@@ -93,7 +93,7 @@ puts "✨✨✨The app that's here for you, no matter your mood✨✨✨"
   def past_review_helper
     var = UserReview.all.select {|user_review| user_review[:user_id] == self.user.id}
     if var.size == 0
-      puts "You haven't written any recommendations yet"
+      puts "You haven't written any reviews yet"
     else
       puts "You have created #{var.size} review(s)!"
       sleep(1.5)
@@ -136,7 +136,8 @@ puts "✨✨✨The app that's here for you, no matter your mood✨✨✨"
       emoji_rec_var = EmojiRec.all.select {|emoji_rec_var| emoji_rec_var[:emoji_name] == emoji_str}
       if emoji_rec_var
         sleep(1.5)
-        puts "⭐️We know that feeling.⭐️"
+        puts "We know that feeling."
+        sleep(1.5)
         UserEmoji.create(user_id: self.user.id, emoji_rec_id: emoji_rec_var[0][:id])
       else 
         puts "We don't currently have that in our system"
@@ -155,48 +156,58 @@ puts "✨✨✨The app that's here for you, no matter your mood✨✨✨"
   end
 
   def book_rec
+    system 'clear'
+    puts ""
     book_rec_var = Book.all.select{|book_rec_var| book_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
-    rec = "You should check out #{book_rec_var[0][:title]} by #{book_rec_var[0][:author]}"
+    rec = "You should check out '#{book_rec_var[0][:title].colorize(:cyan)}' by #{book_rec_var[0][:author]}"
     puts rec
+    puts ""
+    sleep(1)
     UserEmoji.last.update(recommendation: rec)
     puts "This recommendation has been saved for you! Yay!"
-    
-    prompt.select("Would you rather delete it?") do |menu|
-      menu.choice "Yes, delete it please.", -> { destroy_rec}
+        prompt.select("Would you rather delete it?") do |menu|
       menu.choice "No thanks! I'll keep it.", -> { review_prompt }
+      menu.choice "Yes, delete it please.", -> { destroy_rec}
     end
     #helper method for revie
   end
 
   def movie_rec
+    system 'clear'
+    puts ""
     movie_rec_var = Movie.all.select{|movie_rec_var| movie_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
-    rec = "You should watch #{movie_rec_var[0][:title]} by #{movie_rec_var[0][:director]}"
+    rec = "You should watch '#{movie_rec_var[0][:title].colorize(:cyan)}' by #{movie_rec_var[0][:director]}"
     puts rec
+    puts ""
+    sleep(1)
     UserEmoji.last.update(recommendation: rec)
     puts "This recommendation has been saved for you! Yay!"
     #helper method for review
     prompt.select("Would you rather delete it?") do |menu|
-      menu.choice "Yes, delete it please.", -> { destroy_rec}
       menu.choice "No thanks! I'll keep it.", -> { review_prompt }
+      menu.choice "Yes, delete it please.", -> { destroy_rec}
     end
   end
 
   def quote_rec
+    system 'clear'
     quote_rec_var = Quote.all.select{|quote_rec_var| quote_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
-    rec = "#{quote_rec_var[0][:text]} -#{quote_rec_var[0][:author]}"
+    rec = "'#{quote_rec_var[0][:text].colorize(:cyan)}' -#{quote_rec_var[0][:author]}"
     puts rec
+    puts ""
+    sleep(1)
     UserEmoji.last.update(recommendation: rec)
     puts "This recommendation has been saved for you! Yay!"
     prompt.select("Would you rather delete it?") do |menu|
-      menu.choice "Yes, delete it please.", -> { destroy_rec}
       menu.choice "No thanks! I'll keep it.", -> { review_prompt }
-
+      menu.choice "Yes, delete it please.", -> { destroy_rec}
     end
     #helper method for review
   end
 
   def destroy_rec
     UserEmoji.last.destroy
+    exit_strategy
   end
 
   def review_prompt
@@ -210,17 +221,22 @@ puts "✨✨✨The app that's here for you, no matter your mood✨✨✨"
   def create_review
     # binding.pry
     answer = prompt.ask("Enter your review of this recommendation:")
-    puts "#{answer}"
+    puts ""
+    puts "Your review: '#{answer}'".colorize(:magenta)
     UserReview.create(user_id: self.user.id, emoji_rec_id: EmojiRec.last.id, user_review: answer)
+    puts ""
+    sleep (1)
     puts "This review has been saved!"
+    sleep (1)
     prompt.select("Would you rather delete it?") do |menu|
+      menu.choice "Nope, I'll keep it. Take me back to the Main Menu", -> { main_options }
       menu.choice "Yes, please, and thank you.", -> { destroy_review }
-      menu.choice "Nope. Take me back to the Main Menu", -> { main_options }
     end
   end
 
   def destroy_review
     UserReview.last.destroy
+    exit_strategy
   end
   
   def exit_strategy
@@ -230,5 +246,6 @@ puts "✨✨✨The app that's here for you, no matter your mood✨✨✨"
       menu.choice "Exit", -> { exit_helper}
     end
   end
+
 
 end
