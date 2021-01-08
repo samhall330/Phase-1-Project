@@ -46,6 +46,7 @@ user1 = User.create(username: "samhall")
 user2 = User.create(username: "melissafaulner")
 user3 = User.create(username: "johnsmith")
 
+#NOTE: a column was added for :recommendation
 user_emoji1 = UserEmoji.create(user_id: 1, emoji_rec_id: 1)
 user_emoji2 = UserEmoji.create(user_id: 2,emoji_rec_id: 2)
 user_emoji3 = UserEmoji.create(user_id: 3, emoji_rec_id: 3)

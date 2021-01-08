@@ -64,18 +64,38 @@ class YourAppName
       until count == -1 do
         emoji = var[count][:emoji_rec_id]
         r = EmojiRec.all.find{|emoji_rec| emoji_rec[:id] == emoji}
-      puts str_to_emoji(r[:emoji_name])
-      puts var[count][:recommendation]
-      puts var[count][:created_at].localtime.to_formatted_s(:long)
-      puts "************************************************"
-      count -= 1
+        puts str_to_emoji(r[:emoji_name])
+        puts var[count][:recommendation]
+        puts var[count][:created_at].localtime.to_formatted_s(:long)
+        puts "************************************************"
+        count -= 1
       end
     end
     exit_strategy
   end
 
   def past_review_helper
-  
+    var = UserReview.all.select {|user_review| user_review[:user_id] == self.user.id}
+    if var.size == 0
+      puts "You haven't written any recommendations yet"
+    else
+      puts "You have created #{var.size} review(s)!"
+      sleep(1.5)
+      # binding.pry
+      count = var.size - 1
+      until count == -1 do
+        emoji = var[count][:emoji_rec_id]
+        e = EmojiRec.all.find{|emoji_rec| emoji_rec[:id] == emoji}
+        puts str_to_emoji(e[:emoji_name])
+        # u = UserEmoji.all.select {|user_emoji| user_emoji[:id] == self.user.id}
+        # puts "Recommendation: " + u[count][:recommendation]
+        puts "Review: " + var[count][:user_review]
+        puts var[count][:created_at].localtime.to_formatted_s(:long)
+        puts "************************************************"
+        count -= 1
+      end
+    end
+    exit_strategy
   end
 
   def exit_helper
@@ -110,9 +130,9 @@ class YourAppName
 
   def rec_type
     prompt.select("What type of recommendation would you like?") do |menu|
-      menu.choice "Book", -> { book_rec}
-      menu.choice "Movie", -> { movie_rec}
-      menu.choice "Quote", -> { quote_rec}
+      menu.choice "Book", -> { book_rec }
+      menu.choice "Movie", -> { movie_rec }
+      menu.choice "Quote", -> { quote_rec }
     end
   end
 
@@ -125,7 +145,7 @@ class YourAppName
     
     prompt.select("Would you rather delete it?") do |menu|
       menu.choice "Yes, delete it please.", -> { destroy_rec}
-      menu.choice "No thanks! I'll keep it.", -> { exit_strategy }
+      menu.choice "No thanks! I'll keep it.", -> { review_prompt }
     end
     #helper method for revie
   end
@@ -135,10 +155,11 @@ class YourAppName
     rec = "You should watch #{movie_rec_var[0][:title]} by #{movie_rec_var[0][:director]}"
     puts rec
     UserEmoji.last.update(recommendation: rec)
+    puts "This recommendation has been saved for you! Yay!"
     #helper method for review
     prompt.select("Would you rather delete it?") do |menu|
       menu.choice "Yes, delete it please.", -> { destroy_rec}
-      menu.choice "No thanks! I'll keep it.", -> { exit_strategy }
+      menu.choice "No thanks! I'll keep it.", -> { review_prompt }
     end
   end
 
@@ -147,15 +168,41 @@ class YourAppName
     rec = "#{quote_rec_var[0][:text]} -#{quote_rec_var[0][:author]}"
     puts rec
     UserEmoji.last.update(recommendation: rec)
+    puts "This recommendation has been saved for you! Yay!"
     prompt.select("Would you rather delete it?") do |menu|
       menu.choice "Yes, delete it please.", -> { destroy_rec}
-      menu.choice "No thanks! I'll keep it.", -> { exit_strategy }
+      menu.choice "No thanks! I'll keep it.", -> { review_prompt }
+
     end
     #helper method for review
   end
 
   def destroy_rec
     UserEmoji.last.destroy
+  end
+
+  def review_prompt
+    system 'clear'
+    prompt.select("Would you like to review this recommendation?") do |menu|
+      menu.choice "Yes, I'd like to write a review", -> { create_review }
+      menu.choice "No, thanks, take me back to the Main Menu", -> { main_options }
+    end    
+  end
+
+  def create_review
+    # binding.pry
+    answer = prompt.ask("Enter your review of this recommendation:")
+    puts "#{answer}"
+    UserReview.create(user_id: self.user.id, emoji_rec_id: EmojiRec.last.id, user_review: answer)
+    puts "This review has been saved!"
+    prompt.select("Would you rather delete it?") do |menu|
+      menu.choice "Yes, please, and thank you.", -> { destroy_review }
+      menu.choice "Nope. Take me back to the Main Menu", -> { main_options }
+    end
+  end
+
+  def destroy_review
+    UserReview.last.destroy
   end
   
   def exit_strategy
