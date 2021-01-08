@@ -1,12 +1,8 @@
-
 class YourAppName
-  # here will be your CLI!
-  # it is not an AR class so you need to add attr
+  
   attr_reader :prompt
   attr_accessor :user
 
-  @@user_recs = []
-  
   def initialize
     @prompt = TTY::Prompt.new
   end
@@ -15,12 +11,7 @@ class YourAppName
     welcome
     enter_username
     main_options
-  
   end
-
-  
-
-  # private
 
   def welcome
     puts "Welcome to our app!"
@@ -33,11 +24,10 @@ class YourAppName
         if User.find_by(username: name)
           self.user = User.find_by(username: name)
           puts "Welcome Back #{name}!"
-          
+          # binding.pry
         else 
           self.user = User.create(username: name)  
           puts "Welcome, #{name}! Your profile has been created!"
-          
         end 
   end
 
@@ -54,8 +44,6 @@ class YourAppName
     end
   end
 
-  
-
   def get_recommendation_helper
     sleep(1.5)
     system 'clear'
@@ -65,8 +53,25 @@ class YourAppName
   end
 
   def past_recommendation_helper
-    # binding.pry
-   p @@user_recs
+    system 'clear'
+    var = UserEmoji.all.select {|user_emoji| user_emoji[:user_id] == self.user.id}
+    if var.size == 0
+      puts "You haven't recieved any recommendations yet—go get some!"
+    else
+      puts "You have recieved #{var.size} recommendations!"
+      sleep(1.5)
+      count = var.size - 1
+      until count == -1 do
+        emoji = var[count][:emoji_rec_id]
+        r = EmojiRec.all.find{|emoji_rec| emoji_rec[:id] == emoji}
+      puts str_to_emoji(r[:emoji_name])
+      puts var[count][:recommendation]
+      puts var[count][:created_at].localtime.to_formatted_s(:long)
+      puts "************************************************"
+      count -= 1
+      end
+    end
+    exit_strategy
   end
 
   def past_review_helper
@@ -84,6 +89,11 @@ class YourAppName
   def emoji_to_str(arg)
     Rumoji.encode(arg) {|emoji| emoji.code}
   end
+
+  def str_to_emoji(arg)
+    Rumoji.decode(arg) {|emoji| emoji.code}
+  end
+
 
   def check_symbol(arg)
     emoji_str = emoji_to_str(arg)
@@ -103,59 +113,51 @@ class YourAppName
       menu.choice "Book", -> { book_rec}
       menu.choice "Movie", -> { movie_rec}
       menu.choice "Quote", -> { quote_rec}
-      # store_all_recs
-      # menu.choice "All three!", -> { allthree_rec}
     end
   end
 
   def book_rec
-    # binding.pry
     book_rec_var = Book.all.select{|book_rec_var| book_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
-    puts "You should read #{book_rec_var[0][:title]} by #{book_rec_var[0][:author]}"
-    #helper method for review
-    shovel_method(book_rec_var)
-    exit_strategy
+    rec = "You should read #{book_rec_var[0][:title]} by #{book_rec_var[0][:author]}"
+    puts rec
+    UserEmoji.last.update(recommendation: rec)
+    puts "This recommendation has been saved for you! Yay!"
+    
+    prompt.select("Would you rather delete it?") do |menu|
+      menu.choice "Yes, delete it please.", -> { destroy_rec}
+      menu.choice "No thanks! I'll keep it.", -> { exit_strategy }
+    end
+    #helper method for revie
   end
 
   def movie_rec
     movie_rec_var = Movie.all.select{|movie_rec_var| movie_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
-    puts "You should watch #{movie_rec_var[0][:title]} by #{movie_rec_var[0][:director]}"
- 
-    shovel_method(movie_rec_var)
+    rec = "You should watch #{movie_rec_var[0][:title]} by #{movie_rec_var[0][:director]}"
+    puts rec
+    UserEmoji.last.update(recommendation: rec)
     #helper method for review
-    exit_strategy
+    prompt.select("Would you rather delete it?") do |menu|
+      menu.choice "Yes, delete it please.", -> { destroy_rec}
+      menu.choice "No thanks! I'll keep it.", -> { exit_strategy }
+    end
   end
 
   def quote_rec
     quote_rec_var = Quote.all.select{|quote_rec_var| quote_rec_var[:emoji_rec_id] == UserEmoji.last[:emoji_rec_id]}
-    puts "#{quote_rec_var[0][:text]} -#{quote_rec_var[0][:author]}"
-    shovel_method(quote_rec_var)
-    exit_strategy
+    rec = "#{quote_rec_var[0][:text]} -#{quote_rec_var[0][:author]}"
+    puts rec
+    UserEmoji.last.update(recommendation: rec)
+    prompt.select("Would you rather delete it?") do |menu|
+      menu.choice "Yes, delete it please.", -> { destroy_rec}
+      menu.choice "No thanks! I'll keep it.", -> { exit_strategy }
+    end
     #helper method for review
   end
 
-  def shovel_method(param)
-    recs = {user_id: self.user[:id], rec_info: param[0]}
-    @@user_recs << recs
+  def destroy_rec
+    UserEmoji.last.destroy
   end
   
-
-  # def store_all_recs
-  #   binding.pry
-  # end
-  
-  # def allthree_rec
-  #   # binding.pry
-  #   all_three = $emoji_variable[1]
-  #   book = "You should read #{all_three[:book][0]} by #{all_three[:book][1]}"
-  #   movie = "You should watch #{all_three[:movie][0]} by #{all_three[:movie][1]}"
-  #   quote = "#{all_three[:quote][0]} by #{all_three[:quote][1]}"
-  #   puts book
-  #   puts movie
-  #   puts quote
-  #   exit_strategy   
-  # end
-
   def exit_strategy
     sleep (1.5)
     prompt.select("Where would you like to go next?") do |menu|
@@ -164,6 +166,4 @@ class YourAppName
     end
   end
 
- 
-  
 end

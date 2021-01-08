@@ -1,4 +1,5 @@
 require_relative '../config/environment'
 
-app = yourAppName.new
+app = YourAppName.new
+
 app.run

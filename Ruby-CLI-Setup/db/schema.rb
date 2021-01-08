@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_04_210959) do
+ActiveRecord::Schema.define(version: 2021_01_08_003612) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2021_01_04_210959) do
     t.integer "emoji_rec_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "recommendation"
   end
 
   create_table "user_reviews", force: :cascade do |t|
